@@ -4,8 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>upload</title>
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    
+    <header>
+        <a href="../index.html"><h2>업로드 페이지 임시 헤더 (클릭시 초기 페이지로 이동)</h2></a>
+        <small>23101163</small>
+    </header>
+    <main>
+        <div></div>
+        <div>
+            <form method="post" action="#">
+                <label for="file_type" class="form-label">파일 종류</label>
+                <select class="file_type">
+                    <option value="image">이미지</option>
+                    <option value="zip">압축파일</option>
+                    <option value="code">코드파일</option>
+                    <option value="exe">실행파일</option>
+                </select>
+                <div class="container">
+                    <div class="file_input">
+                        <label for="file" class="form-label">파일 선택</label>
+                        <input type="file" class="form-control" id="file" name="file">
+                    </div>
+                    <div class="file_desc">
+                        <textarea class="form-control" id="description" name="description" rows="10" cols="100" placeholder="파일 내용 설명"></textarea>
+                    </div>
+                    <div class="btns">
+                        <button class="cancel_btn" onclick="location.href='fileList.html'" type="button">취소</button>
+                        <button class="upload_btn" type="submit">업로드</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div></div>
+    </main>
 </body>
 </html>
