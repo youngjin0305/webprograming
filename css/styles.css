@@ -21,6 +21,10 @@ main {
     padding: 30px 30px 10px 25px;
 }
 
+.main_header a {
+    font-size: 1.3em;
+}
+
 @media screen and (min-width: 1416px) {
     .main_header {
         width: 1320px;
@@ -38,7 +42,14 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 30px;
+    padding: 15px 30px;
+}
+
+header div{
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    gap: 15px;
 }
 
 header small {
@@ -103,4 +114,12 @@ a {
 
 .lightbox-close:hover {
     color: #000;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
 }
