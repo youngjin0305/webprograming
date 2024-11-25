@@ -97,6 +97,8 @@ function displayFileList(fileList) {
       fileCard.innerHTML = `
           <div class="card-body">
               <h5 class="card-title">${file.filename}</h5>
+              <p class="card-text">파일 종류: ${file.file_type}</p>
+              <p class="card-text">${file.uploaded_at}</p>
               <p class="card-text">${file.description || "설명이 없습니다."}</p>
               <a href="./detail.html?id=${file.id}" class="btn btn-primary">자세히 보기</a>
           </div>
