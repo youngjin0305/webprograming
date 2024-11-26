@@ -33,8 +33,6 @@ main {
 }
 
 .container {
-    border-left: #333 solid 1px;
-    border-right: #333 solid 1px;
     height: 100vh;
 }
 
@@ -122,4 +120,9 @@ a {
     align-items: center;
     justify-content: center;
     gap: 20px;
+}
+
+.file-image {
+    max-width: 400px;
+    height: auto;
 }
