@@ -18,6 +18,14 @@ async function fetchFileDetail() {
     }
 }
 
+function escapeHTML(str) {
+    return str.replace(/&/g, "&amp;")
+              .replace(/</g, "&lt;")
+              .replace(/>/g, "&gt;")
+              .replace(/"/g, "&quot;")
+              .replace(/'/g, "&#039;");
+}
+
 function displayFileDetail(fileDetail) {
     const container = document.querySelector(".container");
     const template = document.getElementById("file-template");
@@ -41,11 +49,12 @@ function displayFileDetail(fileDetail) {
     }
 
     const fileElement = template.content.cloneNode(true);
+    const safeDescription = escapeHTML(fileDetail.description).replace(/\n/g, "<br>");
     fileElement.querySelector(".file-image").src = file_image;
-    fileElement.querySelector(".file-name").textContent = fileDetail.file_name;
-    fileElement.querySelector(".file-type").textContent = fileDetail.file_type;
-    fileElement.querySelector(".file-desc").textContent = fileDetail.description;
-    fileElement.querySelector(".file-uploaded").textContent = fileDetail.uploaded_at;
+    fileElement.querySelector(".file-name").textContent = "파일명: " + fileDetail.file_name;
+    fileElement.querySelector(".file-type").textContent = "파일타입: " + fileDetail.file_type;
+    fileElement.querySelector(".file-desc").innerHTML = safeDescription;
+    fileElement.querySelector(".file-uploaded").textContent = fileDetail.uploaded_at + " 생성";
 
     container.appendChild(fileElement);
 }

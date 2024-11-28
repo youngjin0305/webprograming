@@ -114,12 +114,12 @@ a {
     color: #000;
 }
 
-.card-body {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
+.table tbody tr {
+    cursor: pointer;
+}
+  
+.table tbody tr:hover {
+    background-color: gray;
 }
 
 .btn-back {
@@ -129,7 +129,7 @@ a {
 .detail-top {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
     padding-bottom: 20px;
 }
 
@@ -137,12 +137,6 @@ a {
     display: flex;
     flex-direction: column;
     padding-top: 20px;
-}
-
-.file-download {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
 }
 
 .file-detail {
@@ -157,6 +151,19 @@ a {
 }
 
 .file-image:hover {
-    transform: scale(2.5);
+    transform: scale(2.0);
     cursor: pointer;
+}
+
+.file-desc {
+    min-height: 300px;
+    border-radius: 15px;
+    padding: 15px;
+    border: black 1px solid;
+}
+
+.file-download {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
 }

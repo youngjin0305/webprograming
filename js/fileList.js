@@ -90,21 +90,42 @@ function displayFileList(fileList) {
     return;
   }
 
-  fileList.forEach((file) => {
-    const fileCard = document.createElement("div");
-    fileCard.classList.add("card", "mb-3");
+  const table = document.createElement("table");
+  table.classList.add("table", "table-striped", "table-bordered");
+  table.innerHTML = `
+    <thead class="table-dark">
+      <tr>
+        <th>파일 이름</th>
+        <th>파일 종류</th>
+        <th>업로드 시간</th>
+        <th>파일 크기</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  `;
 
-    fileCard.innerHTML = `
-          <div class="card-body">
-              <h5 class="card-title">${file.file_name}</h5>
-              <p class="card-text">파일 종류: ${file.file_type}</p>
-              <p class="card-text">${file.uploaded_at}</p>
-              <p class="card-text">${file.description || "설명이 없습니다."}</p>
-              <a href="./detail.html?fileId=${file.id}" class="btn btn-primary">자세히 보기</a>
-          </div>
-      `;
-    container.appendChild(fileCard);
+  const tbody = table.querySelector("tbody");
+
+  fileList.forEach((file) => {
+    const row = document.createElement("tr");
+    row.setAttribute("data-file-id", file.id);
+
+    row.innerHTML = `
+      <td>${file.file_name}</td>
+      <td>${file.file_type}</td>
+      <td>${file.uploaded_at}</td>
+      <td>${file.file_size}</td>
+    `;
+
+    row.addEventListener("click", () => {
+      window.location.href = `./detail.html?fileId=${file.id}`;
+    });
+
+    tbody.appendChild(row);
   });
+
+  container.appendChild(table);
 }
 
 document.addEventListener("DOMContentLoaded", fetchFileList);
