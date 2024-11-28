@@ -122,7 +122,41 @@ a {
     gap: 20px;
 }
 
+.btn-back {
+    padding: 8px;
+}
+
+.detail-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+.detail-bottom {
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+}
+
+.file-download {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.file-detail {
+    font-size: 25px;
+}
+
 .file-image {
     max-width: 400px;
     height: auto;
+    transform-origin: top left;
+    transition: transform 0.3s ease-in-out;
+}
+
+.file-image:hover {
+    transform: scale(2.5);
+    cursor: pointer;
 }

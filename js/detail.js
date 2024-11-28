@@ -21,6 +21,7 @@ async function fetchFileDetail() {
 function displayFileDetail(fileDetail) {
     const container = document.querySelector(".container");
     const template = document.getElementById("file-template");
+    const title = document.getElementById("title");
     container.innerHTML = "";
 
     if (!fileDetail || Object.keys(fileDetail).length === 0) {
@@ -28,6 +29,7 @@ function displayFileDetail(fileDetail) {
         return;
     }
 
+    title.textContent = fileDetail.file_name;
 
     let file_image;
     if (fileDetail.image_data) {
