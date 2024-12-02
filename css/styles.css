@@ -155,6 +155,11 @@ a {
     cursor: pointer;
 }
 
+.file-image.no-hover:hover {
+    transform: none;
+    cursor: default;
+}
+
 .file-desc {
     min-height: 300px;
     border-radius: 15px;

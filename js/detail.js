@@ -40,8 +40,10 @@ function displayFileDetail(fileDetail) {
     title.textContent = fileDetail.file_name;
 
     let file_image;
+    let isImage = false;
     if (fileDetail.image_data) {
         file_image = `data:${fileDetail.file_type};base64,${fileDetail.image_data}`;
+        isImage = true;
     } else if (fileDetail.file_type == ".zip") {
         file_image = "https://img.icons8.com/ios/452/zip.png";
     } else {
@@ -51,6 +53,9 @@ function displayFileDetail(fileDetail) {
     const fileElement = template.content.cloneNode(true);
     const safeDescription = escapeHTML(fileDetail.description).replace(/\n/g, "<br>");
     fileElement.querySelector(".file-image").src = file_image;
+    if (!isImage) {
+        fileElement.querySelector(".file-image").classList.add("no-hover");
+    }
     fileElement.querySelector(".file-name").textContent = "파일명: " + fileDetail.file_name;
     fileElement.querySelector(".file-type").textContent = "파일타입: " + fileDetail.file_type;
     fileElement.querySelector(".file-desc").innerHTML = safeDescription;
