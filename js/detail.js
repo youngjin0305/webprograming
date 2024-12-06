@@ -64,4 +64,48 @@ function displayFileDetail(fileDetail) {
     container.appendChild(fileElement);
 }
 
-document.addEventListener("DOMContentLoaded", fetchFileDetail);
+document.addEventListener("DOMContentLoaded", () => {
+    fetchFileDetail();
+
+    document.addEventListener("click", async (event) => {
+        if (event.target.id === "downloadButton") {
+            try {
+                const response = await fetch(`http://127.0.0.1:5000/download/${fileId}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const blob = await response.blob();
+                const link = document.createElement("a");
+                link.href = window.URL.createObjectURL(blob);
+                link.download = fileId;
+                link.click();
+                link.remove();
+            } catch (error) {
+                console.error("Error downloading file:", error);
+                alert("파일 다운로드에 실패했습니다.");
+            }
+        }
+    });
+
+    document.addEventListener("click", async (event) => {
+        if (event.target.id === "deleteButton") {
+            if (confirm("정말 이 파일을 삭제하시겠습니까?")) {
+                try {
+                    const response = await fetch(`http://127.0.0.1:5000/files/${fileId}`, {
+                        method: "DELETE",
+                    });
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    alert("파일이 삭제되었습니다.");
+                    window.location.href = "../index.html";
+                } catch (error) {
+                    console.error("Error deleting file:", error);
+                    alert("파일 삭제에 실패했습니다.");
+                }
+            }
+        }
+    });
+});
