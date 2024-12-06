@@ -128,9 +128,14 @@ a {
 
 .detail-top {
     display: flex;
+    flex-direction: column;
+    padding-bottom: 20px;
+}
+
+.file-text {
+    display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    padding-bottom: 20px;
 }
 
 .detail-bottom {
@@ -146,12 +151,11 @@ a {
 .file-image {
     max-width: 400px;
     height: auto;
-    transform-origin: top left;
-    transition: transform 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 .file-image:hover {
-    transform: scale(2.0);
+    max-width: 800px;
     cursor: pointer;
 }
 

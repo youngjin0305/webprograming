@@ -61,7 +61,8 @@ function displayFileDetail(fileDetail) {
     fileElement.querySelector(".file-name").textContent = "파일명: " + fileDetail.file_name;
     fileElement.querySelector(".file-type").textContent = "파일타입: " + fileDetail.file_type;
     fileElement.querySelector(".file-desc").innerHTML = safeDescription;
-    fileElement.querySelector(".file-uploaded").textContent = fileDetail.uploaded_at + " 생성";
+    fileElement.querySelector(".file-size").textContent = "파일크기: " + fileDetail.file_size;
+    fileElement.querySelector(".file-date").textContent = fileDetail.uploaded_at + " 생성";
 
     container.appendChild(fileElement);
 }
