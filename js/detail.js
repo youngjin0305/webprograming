@@ -46,7 +46,7 @@ function displayFileDetail(fileDetail) {
     if (fileDetail.image_data) {
         file_image = `data:${fileDetail.file_type};base64,${fileDetail.image_data}`;
         isImage = true;
-    } else if (fileDetail.file_type == ".zip") {
+    } else if (fileDetail.file_type == "application/x-zip-compressed") {
         file_image = "https://img.icons8.com/ios/452/zip.png";
     } else {
         file_image = "https://img.icons8.com/ios/452/file.png";
@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
 
                     alert("파일이 삭제되었습니다.");
-                    window.location.href = "../index.html";
+                    window.location.href = "./fileList.html";
                 } catch (error) {
                     console.error("Error deleting file:", error);
                     alert("파일 삭제에 실패했습니다.");
