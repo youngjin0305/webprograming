@@ -1,4 +1,5 @@
 const serverUrl = "https://file-uploader-28lb.onrender.com";
+let allFiles = [];
 
 document.addEventListener("DOMContentLoaded", function () {
   const darkenBackground = document.getElementById("darken-background");
@@ -6,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const lightboxClose = document.getElementById("lightboxClose");
   const cancelButton = document.getElementById("cancelButton");
   const uploadForm = document.getElementById("uploadForm");
+  const filterButtons = document.querySelectorAll(".filter-button");
 
   uploadButton.addEventListener("click", function () {
     darkenBackground.classList.remove("hidden");
@@ -56,14 +58,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const result = await response.json();
       alert(result.message || "파일 업로드 완료");
-      lightbox.classList.add("hidden");
+      // 라이트박스 닫기
+      darkenBackground.classList.add("hidden");
       uploadForm.reset();
+      // 업로드 후 목록 갱신
+      fetchFileList();
     } catch (error) {
       console.error("파일 업로드 실패:", error);
       alert("파일 업로드에 실패했습니다. 다시 시도해주세요.");
     }
   });
+
+  // 필터 버튼 클릭 이벤트
+  filterButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      const type = button.getAttribute("data-type");
+      filterFiles(type);
+    });
+  });
+
+  fetchFileList();
 });
+
+
 
 async function fetchFileList() {
   try {
@@ -73,13 +90,34 @@ async function fetchFileList() {
     }
 
     const fileList = await response.json();
-    displayFileList(fileList);
+    allFiles = fileList;
+    displayFileList(allFiles);
   } catch (error) {
     console.error("Error fetching file list:", error);
     document.querySelector(".container").innerHTML = `
           <p class="text-danger">파일 목록을 불러오는 데 실패했습니다. (${error.message})</p>
       `;
   }
+}
+
+function filterFiles(type) {
+  if (type === "all") {
+    filtered = allFiles;
+  } else if (type === "image") {
+    filtered = allFiles.filter(file => file.file_type.startsWith('image/'));
+  } else if (type === "zip") {
+    filtered = allFiles.filter(file => file.file_type === 'application/x-zip-compressed');
+  } else if (type === "exe") {
+    filtered = allFiles.filter(file => file.file_type === 'application/x-msdownload');
+  } else if (type === "etc") {
+    filtered = allFiles.filter(file => {
+      return !file.file_type.startsWith('image/') &&
+             file.file_type !== 'application/x-zip-compressed' &&
+             file.file_type !== 'application/x-msdownload';
+    });
+  }
+
+  displayFileList(filtered);
 }
 
 function displayFileList(fileList) {
@@ -129,5 +167,3 @@ function displayFileList(fileList) {
 
   container.appendChild(table);
 }
-
-document.addEventListener("DOMContentLoaded", fetchFileList);
