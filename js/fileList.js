@@ -1,3 +1,5 @@
+const serverUrl = "https://file-uploader-28lb.onrender.com";
+
 document.addEventListener("DOMContentLoaded", function () {
   const darkenBackground = document.getElementById("darken-background");
   const uploadButton = document.getElementById("uploadButton");
@@ -43,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
     formData.append("description", description);
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/upload", {
+      const response = await fetch(`${serverUrl}/upload`, {
         method: "POST",
         body: formData,
       });
@@ -65,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function fetchFileList() {
   try {
-    const response = await fetch("http://127.0.0.1:5000/files");
+    const response = await fetch(`${serverUrl}/files`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }

@@ -1,9 +1,11 @@
 const urlParams = new URLSearchParams(window.location.search);
 const fileId = urlParams.get('fileId');
+const serverUrl = "https://file-uploader-28lb.onrender.com";
+
 
 async function fetchFileDetail() {
     try {
-        const response = await fetch(`http://127.0.0.1:5000/files/${fileId}`);
+        const response = await fetch(`${serverUrl}/files/${fileId}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -70,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("click", async (event) => {
         if (event.target.id === "downloadButton") {
             try {
-                const response = await fetch(`http://127.0.0.1:5000/download/${fileId}`);
+                const response = await fetch(`${serverUrl}/download/${fileId}`);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -92,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (event.target.id === "deleteButton") {
             if (confirm("정말 이 파일을 삭제하시겠습니까?")) {
                 try {
-                    const response = await fetch(`http://127.0.0.1:5000/files/${fileId}`, {
+                    const response = await fetch(`${serverUrl}/files/${fileId}`, {
                         method: "DELETE",
                     });
                     if (!response.ok) {
