@@ -22,10 +22,10 @@ async function fetchFileDetail() {
 
 function escapeHTML(str) {
     return str.replace(/&/g, "&amp;")
-              .replace(/</g, "&lt;")
-              .replace(/>/g, "&gt;")
-              .replace(/"/g, "&quot;")
-              .replace(/'/g, "&#039;");
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
 function displayFileDetail(fileDetail) {
@@ -52,6 +52,16 @@ function displayFileDetail(fileDetail) {
         file_image = "https://img.icons8.com/ios/452/file.png";
     }
 
+    let fileType = file.file_type;
+    if (fileType === "image") {
+        fileType = "이미지";
+    } else if (fileType === "zip") {
+        fileType = "압축 파일";
+    } else if (fileType === "exe") {
+        fileType = "실행 파일";
+    } else {
+        fileType = "기타 파일";
+    }
     const fileElement = template.content.cloneNode(true);
     const safeDescription = escapeHTML(fileDetail.description).replace(/\n/g, "<br>");
     fileElement.querySelector(".file-image").src = file_image;
@@ -59,7 +69,7 @@ function displayFileDetail(fileDetail) {
         fileElement.querySelector(".file-image").classList.add("no-hover");
     }
     fileElement.querySelector(".file-name").textContent = "파일명: " + fileDetail.file_name;
-    fileElement.querySelector(".file-type").textContent = "파일타입: " + fileDetail.file_type;
+    fileElement.querySelector(".file-type").textContent = "파일타입: " + fileType;
     fileElement.querySelector(".file-desc").innerHTML = safeDescription;
     fileElement.querySelector(".file-size").textContent = "파일크기: " + fileDetail.file_size;
     fileElement.querySelector(".file-date").textContent = fileDetail.uploaded_at + " 생성";
