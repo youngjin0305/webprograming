@@ -104,17 +104,13 @@ function filterFiles(type) {
   if (type === "all") {
     filtered = allFiles;
   } else if (type === "image") {
-    filtered = allFiles.filter(file => file.file_type.startsWith('image/'));
+    filtered = allFiles.filter(file => file.file_type === 'image');
   } else if (type === "zip") {
-    filtered = allFiles.filter(file => file.file_type === 'application/x-zip-compressed');
+    filtered = allFiles.filter(file => file.file_type === 'zip');
   } else if (type === "exe") {
-    filtered = allFiles.filter(file => file.file_type === 'application/x-msdownload');
+    filtered = allFiles.filter(file => file.file_type === 'exe');
   } else if (type === "etc") {
-    filtered = allFiles.filter(file => {
-      return !file.file_type.startsWith('image/') &&
-             file.file_type !== 'application/x-zip-compressed' &&
-             file.file_type !== 'application/x-msdownload';
-    });
+    filtered = allFiles.filter(file => file.file_type === 'etc');
   }
 
   displayFileList(filtered);
@@ -148,12 +144,22 @@ function displayFileList(fileList) {
   const tbody = table.querySelector("tbody");
 
   fileList.forEach((file) => {
+    let fileType = file.file_type;
+    if (fileType === "image") {
+      fileType = "이미지";
+    } else if (fileType === "zip") {
+      fileType = "압축 파일";
+    } else if (fileType === "exe") {
+      fileType = "실행 파일";
+    } else {
+      fileType = "기타 파일";
+    }
     const row = document.createElement("tr");
     row.setAttribute("data-file-id", file.id);
 
     row.innerHTML = `
       <td>${file.file_name}</td>
-      <td>${file.file_type}</td>
+      <td>${fileType}</td>
       <td>${file.uploaded_at}</td>
       <td>${file.file_size}</td>
     `;
