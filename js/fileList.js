@@ -146,7 +146,7 @@ function displayFileList(fileList) {
   fileList.forEach((file) => {
     let fileType = file.file_type;
     if (fileType === "image") {
-      fileType = "이미지";
+      fileType = "이미지 파일";
     } else if (fileType === "zip") {
       fileType = "압축 파일";
     } else if (fileType === "exe") {
