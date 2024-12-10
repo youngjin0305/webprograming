@@ -52,7 +52,7 @@ function displayFileDetail(fileDetail) {
         file_image = "https://img.icons8.com/ios/452/file.png";
     }
 
-    let fileType = file.file_type;
+    let fileType = fileDetail.file_type;
     if (fileType === "image") {
         fileType = "이미지 파일";
     } else if (fileType === "zip") {
