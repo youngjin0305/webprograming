@@ -208,6 +208,12 @@ a {
     cursor: default;    
 }
 
+.file-info {
+    display: flex;
+    justify-content: left;
+    gap: 20px;
+}
+
 .file-desc {
     min-height: 300px;
     border-radius: 15px;
