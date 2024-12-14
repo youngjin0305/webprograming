@@ -122,3 +122,31 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+document.addEventListener("click", async (event) => {
+    if (event.target.id === "editButton") {
+        const newDescription = prompt("새 파일 설명을 입력하세요:");
+        if (newDescription !== null) {
+            try {
+                const response = await fetch(`${serverUrl}/files/${fileId}`, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ description: newDescription }),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                alert(result.message);
+                fetchFileDetail();
+            } catch (error) {
+                console.error("Error updating description:", error);
+                alert("파일 설명 수정에 실패했습니다.");
+            }
+        }
+    }
+});
