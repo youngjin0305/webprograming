@@ -1,5 +1,8 @@
 const serverUrl = "https://file-uploader-28lb.onrender.com";
 let allFiles = [];
+let filtered = [];
+let currentPage = 1;
+const itemsPerPage = 5;
 
 document.addEventListener("DOMContentLoaded", function () {
   const darkenBackground = document.getElementById("darken-background");
@@ -8,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const cancelButton = document.getElementById("cancelButton");
   const uploadForm = document.getElementById("uploadForm");
   const filterButtons = document.querySelectorAll(".filter-button");
+  const pageButtons = document.querySelectorAll(".page-button");
 
   uploadButton.addEventListener("click", function () {
     darkenBackground.classList.remove("hidden");
@@ -77,6 +81,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
+  // 페이지 버튼 클릭 이벤트
+  pageButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      currentPage = parseInt(button.getAttribute("data-page"));
+      displayFileList(filtered, currentPage);
+    });
+  });
+
   fetchFileList();
 });
 
@@ -91,6 +103,7 @@ async function fetchFileList() {
 
     const fileList = await response.json();
     allFiles = fileList;
+    filtered = allFiles;
     displayFileList(allFiles);
   } catch (error) {
     console.error("Error fetching file list:", error);
@@ -113,6 +126,7 @@ function filterFiles(type) {
     filtered = allFiles.filter(file => file.file_type === 'etc');
   }
 
+  currentPage = 1;
   displayFileList(filtered);
 }
 
@@ -125,6 +139,13 @@ function displayFileList(fileList) {
     container.innerHTML = "<p>등록된 파일이 없습니다.</p>";
     return;
   }
+
+  const totalItems = fileList.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedFiles = fileList.slice(startIndex, endIndex);
 
   const table = document.createElement("table");
   table.classList.add("table", "table-striped", "table-bordered");
@@ -143,7 +164,7 @@ function displayFileList(fileList) {
 
   const tbody = table.querySelector("tbody");
 
-  fileList.forEach((file) => {
+  paginatedFiles.forEach((file) => {
     let fileType = file.file_type;
     if (fileType === "image") {
       fileType = "이미지 파일";
@@ -172,4 +193,25 @@ function displayFileList(fileList) {
   });
 
   container.appendChild(table);
+  updatePaginationButtons(totalPages);
+}
+
+
+function updatePaginationButtons(totalPages) {
+  const pageButtons = document.querySelectorAll(".page-button");
+  pageButtons.forEach(button => {
+    const page = parseInt(button.getAttribute("data-page"));
+    if (page === currentPage) {
+      button.classList.add("active");
+    } else {
+      button.classList.remove("active");
+    }
+
+    // 버튼 표시 여부 결정
+    if (page > totalPages) {
+      button.style.display = "none";
+    } else {
+      button.style.display = "inline-block";
+    }
+  });
 }

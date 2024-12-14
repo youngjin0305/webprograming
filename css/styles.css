@@ -33,7 +33,7 @@ main {
 }
 
 .container {
-    height: 100vh;
+    height: 60vh;
 }
 
 .index-container {
@@ -160,6 +160,11 @@ a {
 .table tbody tr:hover {
     background-color: gray;
 }
+
+.page-button.active {
+    background-color: #0d6efd;
+    color: white;
+  }
 
 .btn-back {
     padding: 8px;
